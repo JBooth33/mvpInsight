@@ -1,28 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Book = require('../models/Book.js');
+var User = require('../models/User.js');
+var UsersController = require("../../controllers/userssController");
 var passport = require('passport');
 require('../config/passport')(passport);
 
-/* GET ALL BOOKS */
+/* GET ALL USERS */
 router.get('/', passport.authenticate('jwt', { session: false }), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        Book.find(function (err, books) {
+        User.find(function (err, books) {
             if (err) return next(err);
-            res.json(books);
+            res.json(users);
         });
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
 
-/* SAVE BOOK */
+/* SAVE USERS */
 router.post('/', passport.authenticate('jwt', { session: false }), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        Book.create(req.body, function (err, post) {
+        User.create(req.body, function (err, post) {
             if (err) return next(err);
             res.json(post);
         });
@@ -31,7 +32,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), function (req
     }
 });
 
-/* GET TOLKEN */
+/* GET TOKEN */
 getToken = function (headers) {
     if (headers && headers.authorization) {
         var parted = headers.authorization.split(' ');
@@ -44,5 +45,17 @@ getToken = function (headers) {
         return null;
     }
 };
+
+// Matches with "/admin/userss"
+router.route("/admin/users")
+  .get(UsersController.findAll)
+  .post(UsersController.create);
+
+// Matches with "/admin/users/_id"
+router
+  .route("/admin/users/_id")
+  .get(UsersController.findById)
+  .put(UsersController.update)
+  .delete(UsersController.remove);
 
 module.exports = router;
