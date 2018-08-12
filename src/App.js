@@ -8,16 +8,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      users: []
     };
   }
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-    axios.get('/api/book')
+    axios.get('/api/users')
       .then(res => {
-        this.setState({ books: res.data });
-        console.log(this.state.books);
+        this.setState({ users: res.data });
+        console.log(this.state.users);
       })
       .catch((error) => {
         if(error.response.status === 401) {

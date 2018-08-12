@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var User = require('../models/User.js');
-var UsersController = require("../../controllers/userssController");
-var passport = require('passport');
-require('../config/passport')(passport);
+var User = require('../../models/User');
+var UsersController = require("../../controllers/usersController");
+//var passport = require('passport');
+var passport = require('../../config/passport')(passport);
 
 /* GET ALL USERS */
 router.get('/', passport.authenticate('jwt', { session: false }), function (req, res) {
@@ -46,7 +46,7 @@ getToken = function (headers) {
     }
 };
 
-// Matches with "/admin/userss"
+// Matches with "/admin/users"
 router.route("/admin/users")
   .get(UsersController.findAll)
   .post(UsersController.create);

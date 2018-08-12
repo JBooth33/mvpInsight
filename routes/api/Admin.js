@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var User = require('../models/User.js');
-var passport = require('passport');
-require('../config/passport')(passport);
+var User = require('../../models/User');
+//var passport = require('passport');
+var passport = require('../../config/passport')(passport);
 
 /* GET ALL ADMIN USERS */
 router.get('/admin', passport.authenticate('jwt', { session: false }), function (req, res) {

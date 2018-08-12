@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema
 
 var PartnerSchema = new Schema({
 
@@ -50,4 +51,6 @@ var PartnerSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Partner', BookSchema);
+const Partner = mongoose.model("Partner", PartnerSchema);
+
+module.exports = Partner;

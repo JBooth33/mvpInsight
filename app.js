@@ -4,12 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var users = require('./routes/User');
-var partners = require('./routes/Partner');
+var users = require('./routes/api/User');
+var partners = require('./routes/api/Partner');
 
-var auth = require('./routes/auth');
+var auth = require('./routes/api/auth');
 var app = express();
 
+var Schema = mongoose.Schema
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/mern-secure', { promiseLibrary: require('bluebird') })
